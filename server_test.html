@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>サイトタイトル</title>
+    <meta name="description" content="サイトキャプションを入力" />
+    <meta name="keywords" content="サイトキーワードを,で区切って入力" />
+  </head>
+
+  <body>
+    <!----- メインコンテンツ ----->
+    <article>
+      <h1>東京の天気予報</h1>
+      <p>ボタンを押してください</p>
+      <p id="weather"></p>
+      <input
+        id="button1"
+        type="button"
+        value="東京の天気"
+        onclick="functionA()"
+      />
+      <section>
+        <script>
+          function functionA() {
+            // XMLHttpRequestオブジェクトの作成
+            var request = new XMLHttpRequest();
+            // URLを開く 今回は東京都のデータ
+            request.open(
+              "GET",
+              "https://www.jma.go.jp/bosai/forecast/data/forecast/130000.json",
+              true
+            );
+            request.responseType = "json";
+
+            // URL内のweathersの値を取得
+            request.onload = function () {
+              let data = this.response;
+              document.getElementById("weather").innerText = data[0].timeSeries[0].areas[0].weathers;
+              console.log(data);
+            };
+            request.send();
+          }
+        </script>
+      </section>
+    </article>
+    <!----- メインコンテンツ END ----->
+  </body>
+</html>
